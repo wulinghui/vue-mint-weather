@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<title>Weather</title>
+		
+		<script src="js/mui.min.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
+		<link rel="stylesheet" type="text/css" href="css/css.css" />
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> 
+	</head>
+
+	<body>
+		<div class="main" id="main">
+			<div class="mui-content">
+				<a><span class="mui-icon mui-icon-bars" style="color: white; position: absolute; margin-top: 10px; margin-left: 20px;"></span></a>
+
+			</div>
+
+			<div class="head" @click="setLocation">
+				<a id="city"  style="color: white; font-size: 1.5em; text-align: center; margin-right: auto; margin-left: auto;">{{now.HeWeather6[0].basic.location}}</a>
+
+			</div>
+			<div style="width: 100%; height: 50px;text-align: right; line-height: 50px; color: white; float: left;">
+				<a style="text-align: right; color: white; font-size: 1.2em; margin-right: 20px;" id="loc">更新于{{time}}</a>
+
+			</div>
+			<div class="" style="width: 100%; float: left; text-align: right; margin-top: 50px; padding-right: 20px;">
+				<p style="color: white; font-size: 4em; text-align: right;" id="tmp">{{now.HeWeather6[0].now.tmp}}℃</p>
+			</div>
+			<div class="" style="width: 100%; float: left; text-align: right; margin-top: 30px; padding-right: 20px;">
+				<p style="color: white; font-size: 2em; text-align: right;" id="cond_txt">{{now.HeWeather6[0].now.cond_txt}}</p>
+			</div>
+			<div class="santian">
+				<div class="" style=" margin-top: 20px;  font-size: 1.5em; margin-left: 15px;">
+					<p style="color: white; font-size: 1em;">最近三天</p>
+				</div>
+				<ul v-for="i in cast.HeWeather6[0].daily_forecast">
+					<li>{{i.date}}</li>
+					<li>{{i.cond_txt_d}}</li>
+					<li>{{i.tmp_min}}</li>
+					<li>{{i.tmp_max}}</li>
+				</ul>
+			</div>
+			<div class="santian">
+				<div class="" style=" margin-top: 20px;  font-size: 1.5em; margin-left: 15px;">
+					<a style="color: white; font-size: 1em;">空气质量</a>
+				</div>
+				<div class="" style="float: left;  width: 50%; height: 150px; position: relative; text-align: center; margin-top: 30px; ">
+					<p style="color: white; font-size: 3em;" id="aqi_123">{{air_now.HeWeather6[0].air_now_city.aqi}}</p>
+					<a style="color: white;">AQI指数</a>
+				</div>
+				<div class="" style="float: left;  width: 50%; height: 190px; position: relative; text-align: center; margin-top: 30px; ">
+					<p style="color: white; font-size: 3em;" id="pm10_123">{{air_now.HeWeather6[0].air_now_city.pm10}}</p>
+					<a style="color: white;">PM10指数</a>
+				</div>
+			</div>
+			<div class="shenghuojianyi">
+				<div class="" style=" margin-top: 20px;  font-size: 1.5em; margin-left: 15px;">
+					<a style="color: white;">生活建议</a>
+				</div>
+				<div v-for="i in life.HeWeather6[0].lifestyle" class="shushidu">
+					<a style="color: white; font-size: 1em;">{{i.txt}}</a>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			var udata={
+				location:'大庆',
+				key:'8f585a414a844d70a41f1dbf367118ac'
+			}
+		</script>
+		<script type="text/javascript">
+			
+			var main=new Vue({
+				el:'#main',
+				data:{
+					udata:{
+						location:'大庆',
+						key:'8f585a414a844d70a41f1dbf367118ac'
+					},
+					cast:{"HeWeather6":[{"basic":{"cid":"CN101240201","location":"大庆","parent_city":"大庆","admin_area":"黑龙江","cnty":"中国","lat":"29.71203423","lon":"115.99281311","tz":"+8.00"},"update":{"loc":"2018-10-21 20:45","utc":"2018-10-21 12:45"},"status":"ok","daily_forecast":[{"cond_code_d":"306","cond_code_n":"305","cond_txt_d":"中雨","cond_txt_n":"小雨","date":"2018-10-21","hum":"85","mr":"15:58","ms":"02:50","pcpn":"5.0","pop":"80","pres":"1021","sr":"06:22","ss":"17:38","tmp_max":"18","tmp_min":"14","uv_index":"1","vis":"4","wind_deg":"354","wind_dir":"北风","wind_sc":"1-2","wind_spd":"3"},{"cond_code_d":"305","cond_code_n":"104","cond_txt_d":"小雨","cond_txt_n":"阴","date":"2018-10-22","hum":"86","mr":"16:31","ms":"03:45","pcpn":"1.0","pop":"55","pres":"1020","sr":"06:22","ss":"17:37","tmp_max":"20","tmp_min":"14","uv_index":"4","vis":"18","wind_deg":"10","wind_dir":"北风","wind_sc":"1-2","wind_spd":"5"},{"cond_code_d":"101","cond_code_n":"101","cond_txt_d":"多云","cond_txt_n":"多云","date":"2018-10-23","hum":"78","mr":"17:05","ms":"04:41","pcpn":"1.0","pop":"55","pres":"1021","sr":"06:23","ss":"17:36","tmp_max":"21","tmp_min":"15","uv_index":"3","vis":"20","wind_deg":"0","wind_dir":"北风","wind_sc":"1-2","wind_spd":"9"}]}]}
+					,now:{
+						"HeWeather6":[{"basic":{"cid":"CN101240201","location":"大庆","parent_city":"大庆","admin_area":"黑龙江","cnty":"中国","lat":"29.71203423","lon":"115.99281311","tz":"+8.00"},"update":{"loc":"2018-10-21 19:46","utc":"2018-10-21 11:46"},"status":"ok","now":{"cloud":"97","cond_code":"104","cond_txt":"阴","fl":"16","hum":"99","pcpn":"0.2","pres":"1019","tmp":"15","vis":"12","wind_deg":"60","wind_dir":"东北风","wind_sc":"1","wind_spd":"4"}}]
+
+					},air_now:{"HeWeather6":[{"basic":{"cid":"CN101240201","location":"大庆","parent_city":"大庆","admin_area":"黑龙江","cnty":"中国","lat":"29.71203423","lon":"115.99281311","tz":"+8.00"},"update":{"loc":"2018-10-21 19:46","utc":"2018-10-21 11:46"},"status":"ok","air_now_city":{"aqi":"55","qlty":"良","main":"PM2.5","pm25":"39","pm10":"34","no2":"28","so2":"9","co":"0.6","o3":"44","pub_time":"2018-10-21 16:00"},"air_now_station":[{"air_sta":"十里","aqi":"59","asid":"CNA1803","co":"0.4","lat":"29.6816","lon":"115.9872","main":"PM2.5","no2":"30","o3":"45","pm10":"0","pm25":"42","pub_time":"2018-10-21 16:00","qlty":"良","so2":"4"},{"air_sta":"茅山头","aqi":"67","asid":"CNA1804","co":"0.8","lat":"29.7048","lon":"115.9581","main":"PM2.5","no2":"29","o3":"48","pm10":"0","pm25":"48","pub_time":"2018-10-21 16:00","qlty":"良","so2":"9"},{"air_sta":"西园","aqi":"75","asid":"CNA1805","co":"0.6","lat":"29.7292","lon":"115.988","main":"PM2.5","no2":"24","o3":"49","pm10":"0","pm25":"55","pub_time":"2018-10-21 16:00","qlty":"良","so2":"8"},{"air_sta":"五七二七厂","aqi":"50","asid":"CNA1806","co":"0.4","lat":"29.6535","lon":"116.0174","main":"-","no2":"22","o3":"44","pm10":"0","pm25":"35","pub_time":"2018-10-21 16:00","qlty":"优","so2":"2"},{"air_sta":"水科所","aqi":"57","asid":"CNA1807","co":"0.7","lat":"29.6926","lon":"116.0628","main":"PM2.5","no2":"23","o3":"46","pm10":"0","pm25":"40","pub_time":"2018-10-21 16:00","qlty":"良","so2":"17"},{"air_sta":"综合工业园","aqi":"62","asid":"CNA1808","co":"0.8","lat":"29.6039","lon":"115.9114","main":"PM2.5","no2":"50","o3":"17","pm10":"0","pm25":"44","pub_time":"2018-10-21 16:00","qlty":"良","so2":"9"},{"air_sta":"石化总厂","aqi":"34","asid":"CNA1809","co":"0.5","lat":"29.7534","lon":"116.0726","main":"-","no2":"29","o3":"48","pm10":"34","pm25":"0","pub_time":"2018-10-21 16:00","qlty":"优","so2":"10"},{"air_sta":"庐山气象台","aqi":"17","asid":"CNA1810","co":"0.4","lat":"29.5867","lon":"115.9936","main":"-","no2":"13","o3":"54","pm10":"0","pm25":"5","pub_time":"2018-10-21 16:00","qlty":"优","so2":"7"}]}]}
+					,life:{"HeWeather6":[{"basic":{"cid":"CN101240201","location":"大庆","parent_city":"大庆","admin_area":"黑龙江","cnty":"中国","lat":"29.71203423","lon":"115.99281311","tz":"+8.00"},"update":{"loc":"2018-10-21 19:46","utc":"2018-10-21 11:46"},"status":"ok","lifestyle":[{"type":"comf","brf":"舒适","txt":"白天不太热也不太冷，风力不大，相信您在这样的天气条件下，应会感到比较清爽和舒适。"},{"type":"drsg","brf":"较冷","txt":"建议着厚外套加毛衣等服装。年老体弱者宜着大衣、呢外套加羊毛衫。"},{"type":"flu","brf":"易发","txt":"天冷空气湿度大，易发生感冒，请注意适当增加衣服，加强自我防护避免感冒。"},{"type":"sport","brf":"较不宜","txt":"有较强降水，建议您选择在室内进行健身休闲运动。"},{"type":"trav","brf":"一般","txt":"温度适宜，有微风同行，但较强降雨的天气将给您的出行带来很多的不便，若坚持旅行建议带上雨具。"},{"type":"uv","brf":"最弱","txt":"属弱紫外线辐射天气，无需特别防护。若长期在户外，建议涂擦SPF在8-12之间的防晒护肤品。"},{"type":"cw","brf":"不宜","txt":"不宜洗车，未来24小时内有雨，如果在此期间洗车，雨水和路上的泥水可能会再次弄脏您的爱车。"},{"type":"air","brf":"良","txt":"气象条件有利于空气污染物稀释、扩散和清除，可在室外正常活动。"}]}]}
+				},
+				created:function(){
+					this.getData();
+				},
+				mounted:function(){
+					
+				},
+				methods:{
+					test:function(){
+						alert(6)
+					},
+					setLocation:function(){
+						mui.prompt("请输入地区","输入地区","地区设置",["确定","取消"],function(event){
+							if(event.index==0){
+								main.udata.location=event.value;
+								main.getData();
+							}
+						},'div');
+					},
+					getData:function(){
+						this.getCase();
+						this.getNow();
+						this.getAirNow()
+						this.getLife()
+					},
+					getBase:function(url,x){
+						mui.getJSON(url,this.udata,function(d){
+							x(d);
+						});
+					},
+					getCase:function(){
+						this.getBase("https://free-api.heweather.com/s6/weather/forecast",function(data){
+							main.cast=data; 
+							console.log(JSON.stringify(data))
+						});
+					},
+					getNow:function(){
+						this.getBase("https://free-api.heweather.com/s6/weather/now",function(data){
+							main.now=data; 
+							console.log(JSON.stringify(data))
+						});
+					},
+					getAirNow:function(){
+						
+						this.getBase("https://free-api.heweather.com/s6/air/now",function(data){
+							main.air_now=data; 
+							console.log(JSON.stringify(data))
+						});
+					},
+					getLife:function(){
+						
+						this.getBase("https://free-api.heweather.com/s6/weather/lifestyle",function(data){
+							main.life=data; 
+							console.log(JSON.stringify(data))
+						});
+					}
+				},
+				computed:{
+					time:function(){
+						return this.now.HeWeather6[0].update.loc.split(' ')[1];
+					}
+				}
+			});
+		</script>
+	</body>
+
+</html>
